@@ -16,10 +16,16 @@ Notes are automatically grouped by day — each day gets its own file.
 uv tool install cliary
 ```
 
+Or you can also install locally with `pip`
+
+```
+pip install -e cliary
+```
 ---
 
 ## Quick Example
 
+1. You can write about **today**
 ```id="f2v6ny"
 $ cliary write
 >> today I learned about pathlib
@@ -28,6 +34,7 @@ $ cliary write
 Saved. Exiting...
 ```
 
+and read what you have written about **today**
 ```id="3r5yhl"
 $ cliary read
 
@@ -35,6 +42,25 @@ today I learned about pathlib
 built my first CLI tool
 ```
 
+2. You can also write and search about **yesterday** (-1 from today)
+```id="f2v6ny"
+$ cliary write -1
+>> yesterday I install Linux
+>> and learn about vim
+>> exit
+Saved. Exiting...
+```
+
+```id="3r5yhl"
+$ cliary read -1
+
+yesterday I install Linux
+and learn about vim
+```
+
+and you can also do that with **tomorrow** (1 from today).
+
+3. You can exact search 
 ```id="6x8pqm"
 $ cliary search good
 
@@ -51,6 +77,7 @@ Write notes:
 ```id="h1k9vb"
 cliary write
 ```
+**Note**: You can exit writing by writing 'exit' or tapping 2 times. 
 
 Read today’s notes:
 
@@ -68,12 +95,12 @@ cliary search <keyword>
 
 ## Storage
 
-Notes are stored in a `logs/` directory in the current working folder.
+Notes are stored in a `logs/` directory in the home directory.   
 
 Example:
 
 ```id="b2k6lm"
-project/
+/home/me/
  ├── logs/
  │    ├── 2026-04-23.txt
 ```

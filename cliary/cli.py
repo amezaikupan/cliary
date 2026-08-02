@@ -1,35 +1,30 @@
 import argparse
-import time
 from cliary.core import write_note, read_notes, search_notes
-from rich.console import Console
-from rich.panel import Panel
-
-
-console = Console()
-console.print(Panel("cliary ✍️\na quiet place for your thoughts", style="cyan"))
-
-
-
-def slow_print(text):
-    for ch in text:
-        print(ch, end="", flush=True)
-        time.sleep(0.02)
-    print()
-
 
 def main():
-    parser = argparse.ArgumentParser(prog="snaplog")
-    parser.add_argument("command")
-    parser.add_argument("arg", nargs="?")
+    parser = argparse.ArgumentParser(prog="cliary", description="cliary is a simple command line diary for your daily use!")
+    parser.add_argument("command", nargs="?", help="write | read | search")
+    parser.add_argument("arg", nargs="?", help="Write and Read: Relative time | Search: terms")
     args = parser.parse_args()
-
         
     match args.command:
         case "write": 
-            console.print("[bold green]Write your thought:[/bold green]")
-            write_note()
+            try:
+                # Long and quite ugly line of code
+                time_dis = int(args.arg) if args.arg != None else 0
+            except ValueError:
+                print("[bold red] Error: argument must be an integer:[/bold red]")
+
+            write_note(time_dis)
+
         case "read": 
-            console.print("[bold yellow]Reading...[/bold yellow]\n")
-            read_notes(slow_print)
+            try:
+                # Long and quite ugly line of code
+                time_dis = int(args.arg) if args.arg != None else 0
+            except ValueError:
+                print("[bold red] Error: argument must be an integer:[/bold red]")
+
+            read_notes(time_dis)
+
         case "search": 
             search_notes(args.arg) if args.arg else print('Please provide a keyword')
