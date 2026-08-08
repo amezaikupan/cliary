@@ -10,21 +10,20 @@ def main():
     match args.command:
         case "write": 
             try:
-                # Long and quite ugly line of code
-                time_dis = int(args.arg) if args.arg != None else 0
+                day_offset = int(args.arg) if args.arg != None else 0
             except ValueError:
                 print("[bold red] Error: argument must be an integer:[/bold red]")
 
-            write_note(time_dis)
+            write_note(day_offset)
 
         case "read": 
             try:
                 # Long and quite ugly line of code
-                time_dis = int(args.arg) if args.arg != None else 0
+                day_offset = int(args.arg) if args.arg != None else 0
             except ValueError:
                 print("[bold red] Error: argument must be an integer:[/bold red]")
 
-            read_notes(time_dis)
+            read_notes(day_offset)
 
         case "search": 
             search_notes(args.arg) if args.arg else print('Please provide a keyword')

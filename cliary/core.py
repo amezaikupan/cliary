@@ -15,21 +15,14 @@ def slow_print(text):
     print()
 
 
-def get_date(time_dis):
-    if time_dis < 0:
-        date = (datetime.now() - timedelta(days=abs(time_dis))).strftime("%Y-%m-%d")
-    else:
-        date = (datetime.now() + timedelta(days=abs(time_dis))).strftime("%Y-%m-%d")
-    return date 
+def get_date(day_offset):
+    return (datetime.now() + timedelta(days=day_offset)).strftime("%Y-%m-%d")
 
+def get_date_file(day_offset):
+    return LOG_DIR / f"{get_date(day_offset)}.txt"
 
-def get_date_file(time_dis):
-    date = get_date(time_dis)
-    return LOG_DIR / f"{date}.txt"
-
-
-def write_note(time_dis=0):
-    file = get_date_file(time_dis)
+def write_note(day_offset=0):
+    file = get_date_file(day_offset)
 
     console.print("[bold green]Write your thought:[/bold green]")
     prev_note = ''
@@ -43,16 +36,16 @@ def write_note(time_dis=0):
         prev_note = note
 
 
-def read_notes(time_dis=0):
-    if time_dis == 0:
+def read_notes(day_offset=0):
+    if day_offset == 0:
         date = 'today'
-    elif time_dis == -1:
+    elif day_offset == -1:
         date = 'yesterday'
     else:
-        date = get_date(time_dis)
+        date = get_date(day_offset)
     console.print(f"[bold yellow]Reading {date}:[/bold yellow]\n")
 
-    file = get_date_file(time_dis)
+    file = get_date_file(day_offset)
     if not file.exists(): 
         slow_print('no notes today')
         return
