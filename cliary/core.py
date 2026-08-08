@@ -6,7 +6,7 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def get_today_file():
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().date()
     return LOG_DIR / f"{today}.txt"
 
 

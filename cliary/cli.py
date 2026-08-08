@@ -6,7 +6,6 @@ from rich.panel import Panel
 
 
 console = Console()
-console.print(Panel("cliary ✍️\na quiet place for your thoughts", style="cyan"))
 
 
 
@@ -18,8 +17,12 @@ def slow_print(text):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="snaplog")
-    parser.add_argument("command")
+    console.print(Panel("cliary ✍️\na quiet place for your thoughts", style="cyan"))
+    parser = argparse.ArgumentParser(prog="cliary")
+    parser.add_argument(
+    "command",
+    choices=["write", "read", "search"]
+    )
     parser.add_argument("arg", nargs="?")
     args = parser.parse_args()
 
