@@ -1,18 +1,8 @@
 from pathlib import Path
 from datetime import datetime, timedelta
-from rich.console import Console 
-import time
 
 LOG_DIR = Path.home() / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-
-console = Console()
-    
-def slow_print(text):
-    for ch in text:
-        print(ch, end="", flush=True)
-        time.sleep(0.02)
-    print()
 
 
 def get_date(day_offset):
@@ -21,10 +11,16 @@ def get_date(day_offset):
 def get_date_file(day_offset):
     return LOG_DIR / f"{get_date(day_offset)}.txt"
 
+def get_display_date(day_offset):
+    if day_offset == 0:
+        return "today"
+    elif day_offset == -1:
+        return "yesterday"
+    return get_date(day_offset)
+
 def write_note(day_offset=0):
     file = get_date_file(day_offset)
 
-    console.print("[bold green]Write your thought:[/bold green]")
     prev_note = ''
     while True:
         note = input(">> ")
@@ -36,22 +32,14 @@ def write_note(day_offset=0):
         prev_note = note
 
 
-def read_notes(day_offset=0):
-    if day_offset == 0:
-        date = 'today'
-    elif day_offset == -1:
-        date = 'yesterday'
-    else:
-        date = get_date(day_offset)
-    console.print(f"[bold yellow]Reading {date}:[/bold yellow]\n")
-
+def read_notes(day_offset=0, display_fn=print):
     file = get_date_file(day_offset)
     if not file.exists(): 
-        slow_print('no notes today')
+        display_fn('No notes for this date.\n')
         return
 
     with open(file) as f:
-        for line in f: slow_print(line)
+        for line in f: display_fn(line)
 
 def search_notes(keyword):
     found = False
@@ -61,5 +49,6 @@ def search_notes(keyword):
                 if keyword.lower() in line.lower():
                     print(f"{file.name}: {line.strip()}")
                     found = True
-    if found == False:
-        console.print(f"Found no file contains [bold red]{keyword}[/bold red]")
+
+    if not found:
+        print(f'No notes found containing "{keyword}".')
